@@ -128,3 +128,23 @@ recall=matrizMetricas{1,2}/(matrizMetricas{1,2}+matrizMetricas{4,2});
 
 % fScore=(2*precision*recall)/(precision*recall)
 fScore=(2*precision*recall)/(precision+recall)
+
+
+% Extraer las métricas y valores de la matriz
+metricas = matrizMetricas(:, 1);  % Nombres de las métricas
+valores = cell2mat(matrizMetricas(:, 2));  % Valores de las métricas convertidos a números
+
+
+% Crear un gráfico de barras
+figure;
+bar(valores);
+
+% Personalizar el gráfico
+xticks(1:length(metricas));         % Establecer las etiquetas en el eje X
+xticklabels(metricas);              % Etiquetas para cada métrica
+xlabel('Métricas');                 % Etiqueta del eje X
+ylabel('Valor');                    % Etiqueta del eje Y
+title('Matriz de Evaluación');      % Título del gráfico
+grid on;                            % Mostrar la cuadrícula
+
+
