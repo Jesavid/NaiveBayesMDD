@@ -119,46 +119,65 @@ endfunction
 
 % Calcular métricas de evaluación
 % Evaluación para la clase 4
-matrizMetricas = evaluarPrediccion(prediccionMatriz,4,predictTest);
+matrizMetricasMaligno = evaluarPrediccion(prediccionMatriz,4,predictTest);
 
 % precision=True Positive/(True Positive+False Positive)
-precisionMaligno=matrizMetricas{1,2}/(matrizMetricas{1,2}+matrizMetricas{3,2});
+precisionMaligno=matrizMetricasMaligno{1,2}/(matrizMetricasMaligno{1,2}+matrizMetricasMaligno{3,2});
 
 % recall=True Positive/(True Positive+False Negative)
-recallMalingo=matrizMetricas{1,2}/(matrizMetricas{1,2}+matrizMetricas{4,2});
+recallMalingo=matrizMetricasMaligno{1,2}/(matrizMetricasMaligno{1,2}+matrizMetricasMaligno{4,2});
 
 % fScore=(2*precision*recall)/(precision*recall)
 fScoreMaligno=(2*recallMalingo*recallMalingo)/(recallMalingo+recallMalingo)
 
 % Evaluación para la clases 2
 % Calcular métricas de evaluación
-matrizMetricas = evaluarPrediccion(prediccionMatriz,2,predictTest);
+matrizMetricasBenigno = evaluarPrediccion(prediccionMatriz,2,predictTest);
 
 % precision=True Positive/(True Positive+False Positive)
-precisionBenigno=matrizMetricas{1,2}/(matrizMetricas{1,2}+matrizMetricas{3,2});
+precisionBenigno=matrizMetricasBenigno{1,2}/(matrizMetricasBenigno{1,2}+matrizMetricasBenigno{3,2});
 
 % recall=True Positive/(True Positive+False Negative)
-recallBenigno=matrizMetricas{1,2}/(matrizMetricas{1,2}+matrizMetricas{4,2});
+recallBenigno=matrizMetricasBenigno{1,2}/(matrizMetricasBenigno{1,2}+matrizMetricasBenigno{4,2});
 
 % fScore=(2*precision*recall)/(precision*recall)
-fScoreBenigno=(2*precisionBenignoo*recallBenigno)/(precisionBenigno+recallBenigno)
+fScoreBenigno=(2*precisionBenigno*recallBenigno)/(precisionBenigno+recallBenigno)
 
+% Extraer las métricas y valores de la matriz para la clase Maligno
+metricas = matrizMetricasMaligno(:, 1);  % Nombres de las métricas
+valores = cell2mat(matrizMetricasMaligno(:, 2));  % Valores de las métricas convertidos a números
 
-% Extraer las métricas y valores de la matriz
-metricas = matrizMetricas(:, 1);  % Nombres de las métricas
-valores = cell2mat(matrizMetricas(:, 2));  % Valores de las métricas convertidos a números
-
-
-% Crear un gráfico de barras
+% Crear una nueva figura
 figure;
+
+% Primer subgráfico para la clase Maligno
+subplot(1, 2, 1);  % Crear una figura con 1 fila y 2 columnas, y seleccionar la primera
 bar(valores);
+xticks(1:length(metricas));
+xticklabels(metricas);
+xlabel('Métricas');
+ylabel('Valor');
+title('Matriz de confusión para la clase Maligno');
+grid on;
 
-% Personalizar el gráfico
-xticks(1:length(metricas));         % Establecer las etiquetas en el eje X
-xticklabels(metricas);              % Etiquetas para cada métrica
-xlabel('Métricas');                 % Etiqueta del eje X
-ylabel('Valor');                    % Etiqueta del eje Y
-title('Matriz de Evaluación');      % Título del gráfico
-grid on;                            % Mostrar la cuadrícula
+% Extraer las métricas y valores de la matriz para la clase Benigno
+metricas = matrizMetricasBenigno(:, 1);
+valores = cell2mat(matrizMetricasBenigno(:, 2));
 
+% Segundo subgráfico para la clase Benigno
+subplot(1, 2, 2);  % Seleccionar la segunda posición en la figura
+bar(valores);
+xticks(1:length(metricas));
+xticklabels(metricas);
+xlabel('Métricas');
+ylabel('Valor');
+title('Matriz de confusión para la clase Benigno');
+grid on;
+
+% Crear diagramas para las métricas
+figure;
+suplot(1,2,1);
+bar(porcentaje);
+xticks('Maligno','Benigno')
+xtickslables
 
