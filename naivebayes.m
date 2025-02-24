@@ -118,16 +118,30 @@ function [evaluacionMatriz]=evaluarPrediccion(matrizResultados, claseEvaluada,pr
 endfunction
 
 % Calcular métricas de evaluación
+% Evaluación para la clase 4
 matrizMetricas = evaluarPrediccion(prediccionMatriz,4,predictTest);
 
 % precision=True Positive/(True Positive+False Positive)
-precision=matrizMetricas{1,2}/(matrizMetricas{1,2}+matrizMetricas{3,2});
+precisionMaligno=matrizMetricas{1,2}/(matrizMetricas{1,2}+matrizMetricas{3,2});
 
 % recall=True Positive/(True Positive+False Negative)
-recall=matrizMetricas{1,2}/(matrizMetricas{1,2}+matrizMetricas{4,2});
+recallMalingo=matrizMetricas{1,2}/(matrizMetricas{1,2}+matrizMetricas{4,2});
 
 % fScore=(2*precision*recall)/(precision*recall)
-fScore=(2*precision*recall)/(precision+recall)
+fScoreMaligno=(2*recallMalingo*recallMalingo)/(recallMalingo+recallMalingo)
+
+% Evaluación para la clases 2
+% Calcular métricas de evaluación
+matrizMetricas = evaluarPrediccion(prediccionMatriz,2,predictTest);
+
+% precision=True Positive/(True Positive+False Positive)
+precisionBenigno=matrizMetricas{1,2}/(matrizMetricas{1,2}+matrizMetricas{3,2});
+
+% recall=True Positive/(True Positive+False Negative)
+recallBenigno=matrizMetricas{1,2}/(matrizMetricas{1,2}+matrizMetricas{4,2});
+
+% fScore=(2*precision*recall)/(precision*recall)
+fScoreBenigno=(2*precisionBenignoo*recallBenigno)/(precisionBenigno+recallBenigno)
 
 
 % Extraer las métricas y valores de la matriz
