@@ -121,6 +121,9 @@ endfunction
 % Evaluación para la clase 4
 matrizMetricasMaligno = evaluarPrediccion(prediccionMatriz,4,predictTest);
 
+% Accuracy = True Postivie/(True Positive+False Positive+False Negative)
+accuracyMaligno=matrizMetricasMaligno{1,2}/(matrizMetricasMaligno{1,2}+matrizMetricasMaligno{3,2}+matrizMetricasMaligno{4,2});
+
 % precision=True Positive/(True Positive+False Positive)
 precisionMaligno=matrizMetricasMaligno{1,2}/(matrizMetricasMaligno{1,2}+matrizMetricasMaligno{3,2});
 
@@ -134,6 +137,9 @@ fScoreMaligno=(2*recallMalingo*recallMalingo)/(recallMalingo+recallMalingo)
 % Calcular métricas de evaluación
 matrizMetricasBenigno = evaluarPrediccion(prediccionMatriz,2,predictTest);
 
+% Accuracy = True Postivie/(True Positive+False Positive+False Negative)
+accuracyBenigno=matrizMetricasBenigno{1,2}/(matrizMetricasBenigno{1,2}+matrizMetricasBenigno{3,2}+matrizMetricasBenigno{4,2});
+
 % precision=True Positive/(True Positive+False Positive)
 precisionBenigno=matrizMetricasBenigno{1,2}/(matrizMetricasBenigno{1,2}+matrizMetricasBenigno{3,2});
 
@@ -146,6 +152,13 @@ fScoreBenigno=(2*precisionBenigno*recallBenigno)/(precisionBenigno+recallBenigno
 % Extraer las métricas y valores de la matriz para la clase Maligno
 metricas = matrizMetricasMaligno(:, 1);  % Nombres de las métricas
 valores = cell2mat(matrizMetricasMaligno(:, 2));  % Valores de las métricas convertidos a números
+
+% Evaluación del model general
+evaluacionMatrizGeneral={'Accuracy',0;'Precision',0;'Recall',0;'Fscore',0};
+evaluacionMatrizGeneral{1,2}=(matrizMetricasBenigno{1,2}+matrizMetricasBenigno{2,2})/length(predictTest);
+evaluacionMatrizGeneral{2,2}=(precisionBenigno+precisionMaligno)/2;
+evaluacionMatrizGeneral{3,2}=(recallBenigno+recallMalingo)/2;
+evaluacionMatrizGeneral{4,2}=(fScoreBenigno+fScoreMaligno)/2;
 
 % Crear una nueva figura
 figure;
@@ -175,9 +188,8 @@ title('Matriz de confusión para la clase Benigno');
 grid on;
 
 % Crear diagramas para las métricas
-figure;
-suplot(1,2,1);
-bar(porcentaje);
-xticks('Maligno','Benigno')
-xtickslables
-
+%figure;
+%suplot(1,2,1);
+%bar(porcentaje);
+%xticks('Maligno','Benigno')
+%xtickslables
